@@ -14,3 +14,7 @@ Donc la commande ci -dessus est à planifier dans votre crontab:
 -Du lundi au vendredi à 23h10
 – et on les supprime à chaque fois que la condition est remplie
 -Format du fichier doit étre comme ça :X_YearMMDay_numfac_numcentre.gz  exemple :(AVC_20191201_8876_1122.gz)
+
+
+Remarque : Du lundi au vendredi vous recevez un mail qui contient les informations a propos le purge realisé.
+Chaque fichier purger et rediectionner vers leur repertoire ç'est a dire le rep mois/Anne.
