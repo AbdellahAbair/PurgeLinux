@@ -81,12 +81,12 @@ done
 done
 
 
-#echo -e " Bonjour tout le monde,voici le purge du mois $DIFF dans l'anne $Year .C'.\n\nPour info: tous les fichiers qui sont purge ,ils ont depalace vers $NOM_REP/$DEF_BORNE.\n\n"  2>&1 | tee SomeFile.txt
-#sed -i '$a 20270 Casablanca www.abdellah_abair.com People matter, results count.\n' SomeFile.txt
+echo -e " Bonjour tout le monde,voici le purge du mois $DIFF dans l'anne $Year .C'.\n\nPour info: tous les fichiers qui sont purge ,ils ont depalace vers $NOM_REP/$DEF_BORNE.\n\n"  2>&1 | tee SomeFile.txt
+sed -i '$a 20270 Casablanca www.abdellah_abair.com People matter, results count.\n' SomeFile.txt
 
 FROM="x"
 TO="y"
 SUBJECT="Purge des factures sur le centre numero $CENTRE à $DIFF/$Year"
-#MSG=`cat SomeFile.txt`
-#rm -rf SomeFile.txt
-#mail -s $SUBJECT -r $x $y < SomeFile.txt
+MSG=`cat SomeFile.txt`
+rm -rf SomeFile.txt
+mail -s $SUBJECT -r $x $y < SomeFile.txt
