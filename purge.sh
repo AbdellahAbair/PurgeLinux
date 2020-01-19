@@ -4,7 +4,8 @@
 init(){
 MAIL_RECEIVE="abdellah.abair@gmail.com"
 NOM_REP="/opt/logs"
-BATCHFAC="/home/aabair/factures"
+BATCHFAC="/root/factures"
+
 }
 comande()
 {
@@ -33,7 +34,8 @@ CENTRE=`hostname`
 echo -e "Le Script de purge des factures sur le centre numero $CENTRE à $Year/$Month\n"
 
 ##PURGE sur le repertoire /home/x/factures
-##FORMAT du ficher que on veut deplacer vers /opt/logs/X est :AVC_20191201_8876_1122.gz
+##FORMAT du ficher que on veut deplacer vers /opt/logs/X est :
+
 DEF_BORNE=$Year$DIFF
 search_name(){
 
@@ -49,9 +51,17 @@ esac
 }
 
 init
+##Test if Directory EXISTS OR NOT
+##IF NOT EXISTS the Directory will be created in /opt/archives/$DEF_BORNE
 if [ ! -d /opt/logs/$DEF_BORNE ] ; then
  mkdir $NOM_REP/$DEF_BORNE
 fi
+##TEST if File CSV Exists OR NOT
+##IF NOT EXISTS the File will be created in our /home/user
+if [ ! -f File_csv_$DEF_BORNE.csv ] ; then
+echo "Date ; Repertoire avant le deplacement ; Repertoire avant le deplacement ;OK/NOK">File_csv_$DEF_BORNE.csv
+fi
+
 for rep1 in `ls -l $BATCHFAC | grep -e AVC -e DVC -e  FAC | awk '/^d/ {print $NF}'`
 do
    search_name $rep1
@@ -63,19 +73,20 @@ fi
 for FlKb in `find $rep -name $search_name1 -ls 2>/dev/null| nawk '{print $11}'`
 do
       echo "Deplacer $FlKb vers $NOM_REP/$DEF_BORNE/$rep1"
-      mv $FlKb $NOM_REP/$DEF_BORNE/$rep1
+      #mv $FlKb $NOM_REP/$DEF_BORNE/$rep1
+      echo "$DEF_BORNE ; $rep ; $FlKb ; OK">>File_csv_$DEF_BORNE.csv
 
 done
 
 done
 
-echo -e " Bonjour tout le monde,voici le purge du mois $DIFF dans l'anne $Year .C'.\n\nPour info: tous les fichiers qui sont purge ,ils ont depalace vers $NOM_REP/$DEF_BORNE.\n\n"  2>&1 | tee SomeFile.txt
-sed -i '$a 20270 Casablanca www.abdellah_abair.com People matter, results count.\n' SomeFile.txt
+
+#echo -e " Bonjour tout le monde,voici le purge du mois $DIFF dans l'anne $Year .C'.\n\nPour info: tous les fichiers qui sont purge ,ils ont depalace vers $NOM_REP/$DEF_BORNE.\n\n"  2>&1 | tee SomeFile.txt
+#sed -i '$a 20270 Casablanca www.abdellah_abair.com People matter, results count.\n' SomeFile.txt
 
 FROM="x"
 TO="y"
 SUBJECT="Purge des factures sur le centre numero $CENTRE à $DIFF/$Year"
-MSG=`cat SomeFile.txt`
-rm -rf SomeFile.txt
-mail -s $SUBJECT -r $x $y < SomeFile.txt
-
+#MSG=`cat SomeFile.txt`
+#rm -rf SomeFile.txt
+#mail -s $SUBJECT -r $x $y < SomeFile.txt
